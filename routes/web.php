@@ -20,6 +20,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/forms', 'HomeController@forms');
 Route::post('/registar/entidad', 'EntidadesController@store')->name('registar.entidad');
+// Route::post('/registar/usuarios', 'ClientesController@store')->name('registar.usuario');
+
+Route::resource('clientes', 'ClientesController');
+
 Route::post('/registar/usuarios', 'ClientesController@store')->name('registar.usuario');
 Route::put('/registar/entidadupdate', 'EntidadesController@update')->name('update.entidad');
 Route::get('/registar/crearbecas',  'HomeController@becas')->name('beca');

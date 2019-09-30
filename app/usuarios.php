@@ -8,9 +8,9 @@ class usuarios extends Model
 {
     //
     protected $table = 'cliente';
-       protected $primaryKey = 'id_cliente';
+    protected $primaryKey = 'id_cliente';
     protected $fillable = [
-		
+
 		  'id_profesion' ,
 		  'id_pais' ,
 		  'id_tipo' ,
@@ -20,7 +20,7 @@ class usuarios extends Model
 		  'telefono' ,
 		  'direccion' ,
 		  'fecha_nacimiento',
-		  'sexo' ,    	
+		  'sexo' ,
 		];
 
   public $timestamps = false;
