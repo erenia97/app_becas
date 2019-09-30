@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">{{ __('Registra tu datos') }}</div>
             <div class="card-body">
-                <form  method="POST" action="{{ route('registar.usuario') }}" enctype="multipart/form-data">
+                <form  method="POST" action="{{ route('clientes.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label for="id_carrera" class="col-md-4 col-form-label text-md-right">{{ __('Profesion') }}</label>
@@ -25,27 +25,18 @@
                         </div>
                     </div>
 
-
-                      <div class="form-group row">
-                        <label for="id_carrera" class="col-md-4 col-form-label text-md-right">{{ __('Profesion') }}</label>
+                    <div class="form-group row">
+                        <label for="id_profesion" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
                         <div class="col-md-6">
-                            <select id="id_carrera" type="text" class="form-control{{ $errors->has('id_carrera') ? ' is-invalid' : '' }}" name="id_carrera">
-                                @foreach ($profesion as $prof)
-
-                                  @if($profesion->id_carrera == $prof-> id_carrera_pareja)
-                                    <option value="{{$prof->id_carrera}}">{{ $prof->carrera }}</option>
-                                  @endif
-                                  
-                                @endforeach
+                            <select id="id_profesion" type="text" class="form-control{{ $errors->has('id_profesion') ? ' is-invalid' : '' }}" name="id_profesion">
                             </select>
-                            @if ($errors->has('id_carrera'))
+                            @if ($errors->has('id_profesion'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('id_carrera') }}</strong>
+                                    <strong>{{ $errors->first('id_profesion') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
-
 
                      <div class="form-group row">
                         <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
@@ -63,13 +54,13 @@
 
 
                     <div class="form-group row">
-                        <label for="Razon_social" class="col-md-4 col-form-label text-md-right">{{ __('Razon Social') }}</label>
+                        <label for="Apellido" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
                         <div class="col-md-6">
-                            <input id="Razon_social" type="text" class="form-control{{ $errors->has('Razon_social') ? ' is-invalid' : '' }}" name="Razon_social" value="{{ old('Razon_social') }}">
+                            <input id="Apellido" type="text" class="form-control{{ $errors->has('Apellido') ? ' is-invalid' : '' }}" name="Apellido" value="{{ old('Apellido') }}">
 
-                            @if ($errors->has('Razon_social'))
+                            @if ($errors->has('Apellido'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('Razon_social') }}</strong>
+                                    <strong>{{ $errors->first('Apellido') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -92,64 +83,13 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="pagina_Web" class="col-md-4 col-form-label text-md-right">{{ __('Pegina web') }}</label>
+                        <label for="Correo" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
                         <div class="col-md-6">
-                            <input id="pagina_Web" type="text" class="form-control{{ $errors->has('pagina_Web') ? ' is-invalid' : '' }}" name="pagina_Web" value="{{ old('pagina_Web') }}">
+                            <input id="Correo" type="text" class="form-control{{ $errors->has('Correo') ? ' is-invalid' : '' }}" name="Correo" value="{{ old('Correo') }}">
 
-                            @if ($errors->has('pagina_Web'))
+                            @if ($errors->has('Correo'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('pagina_Web') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="sector" class="col-md-4 col-form-label text-md-right">{{ __('Sector') }}</label>
-                        <div class="col-md-6">
-                            <input id="sector" type="text" class="form-control{{ $errors->has('sector') ? ' is-invalid' : '' }}" name="sector" value="{{ old('sector') }}">
-
-                            @if ($errors->has('sector'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('sector') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label>
-                        <div class="col-md-6">
-                            <input id="logo" type="file" class="form-control{{ $errors->has('logo') ? ' is-invalid' : '' }}" name="logo">
-                            @if ($errors->has('logo'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('logo') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="direccion" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
-                        <div class="col-md-6">
-                            <input id="direccion" type="text" class="form-control{{ $errors->has('direccion') ? ' is-invalid' : '' }}" name="direccion" value="{{ old('direccion') }}">
-
-                            @if ($errors->has('direccion'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('direccion') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="Nit" class="col-md-4 col-form-label text-md-right">{{ __('Nit') }}</label>
-                        <div class="col-md-6">
-                            <input id="Nit" type="text" class="form-control{{ $errors->has('Nit') ? ' is-invalid' : '' }}" name="Nit" value="{{ old('Nit') }}">
-
-                            @if ($errors->has('Nit'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('Nit') }}</strong>
+                                    <strong>{{ $errors->first('Correo') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -168,6 +108,45 @@
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <label for="direccion" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
+                        <div class="col-md-6">
+                            <input id="direccion" type="text" class="form-control{{ $errors->has('direccion') ? ' is-invalid' : '' }}" name="direccion">
+                            @if ($errors->has('direccion'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('direccion') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="fecha_nacimiento" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de nacimiento') }}</label>
+                        <div class="col-md-6">
+                            <input id="fecha_nacimiento" type="date" class="form-control{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }}" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}">
+
+                            @if ($errors->has('fecha_nacimiento'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('fecha_nacimiento') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="sexo" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}</label>
+                        <div class="col-md-6">
+                            <select name="sexo" id="sexo" class="form-control">
+                                <option value="0">Hombre</option>
+                                <option value="1">Mujer</option>
+                            </select>
+                            @if ($errors->has('sexo'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('sexo') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-info">Enviar</button>
                 </form>
             </div>
@@ -177,9 +156,30 @@
 
 @push('scripts')
     <script>
-        console.log($('#id_carrera').val());
-        $('select #id_carrera').on('change', function() {
-            alert( this.value );
+
+        cargarCarreras($('#id_carrera').val());
+        $(document).on('change', '#id_carrera', function() {
+            // Does some stuff and logs the event to the console
+            cargarCarreras($('#id_carrera').val())
         });
+
+        function cargarCarreras(id) {
+            $.ajax({
+                url: "{{ env('APP_URL') }}api/get/carreras?id_carrera="+id
+            }).done(function(response) {
+
+                $('#id_profesion').empty();
+                $("#id_profesion option").each(function() {
+                    $(this).remove();
+                });
+
+                var profe = response;
+
+                $.each(profe, function( index, element ) {
+                    // element == this
+                    $('#id_profesion').append('<option value="'+element.id_carrera+'">'+element.carrera+'</option>');
+                });
+            });
+        }
     </script>
 @endpush

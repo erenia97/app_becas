@@ -20,4 +20,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/forms', 'HomeController@forms');
 Route::post('/registar/entidad', 'EntidadesController@store')->name('registar.entidad');
-Route::post('/registar/usuarios', 'ClientesController@store')->name('registar.usuario');
+// Route::post('/registar/usuarios', 'ClientesController@store')->name('registar.usuario');
+
+
+
+
+
+
+Route::resource('clientes', 'ClientesController');

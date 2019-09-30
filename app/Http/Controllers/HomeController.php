@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\usuarios;
 use Illuminate\Http\Request;
 use App\pais;
 use App\carreras;
@@ -34,6 +35,12 @@ class HomeController extends Controller
         $profesion= carreras::all();
         $paises = pais::all();
 
+
+        $cliente = usuarios::where('id_tipo', $user->id_tipo)->first();
+
+        if ($cliente){
+            return redirect()->route('home');
+        }
 
         if ($user->tipo_usuario == 0) {
             return view('auth.forms.usuario', compact('paises','profesion'));
