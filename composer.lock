@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff4fa460e6b2321543159eb87a43d785",
+    "content-hash": "074158a878034a7148ee9e699f679c71",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -465,6 +465,47 @@
             ],
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "koss-shtukert/laravel-nova-select2-auto-complete",
+            "version": "v1.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/koss-shtukert/laravel-nova-select2-auto-complete.git",
+                "reference": "d37f91a58395260cb1bbbb40ffd7941f886b3f57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/koss-shtukert/laravel-nova-select2-auto-complete/zipball/d37f91a58395260cb1bbbb40ffd7941f886b3f57",
+                "reference": "d37f91a58395260cb1bbbb40ffd7941f886b3f57",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KossShtukert\\LaravelNovaSelect2\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KossShtukert\\LaravelNovaSelect2\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2019-09-23T13:06:58+00:00"
         },
         {
             "name": "kylekatarnls/update-helper",

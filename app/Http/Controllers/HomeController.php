@@ -28,6 +28,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
+       public function becas()
+    {
+        return view('auth.forms.crearbecas');
+    }
 
     public function forms()
     {
