@@ -41,13 +41,17 @@ class BecasController extends Controller
     }
 
     public function store(Request $request) {
-        try {
-           // $validacion = becas::where("Lugar", $request->input('Lugar'))->first();
-            if (!$validacion) {
+          $id_tipo = entidades::find(['id_tipo']);
+
+             $becas = tipo_becas::create([
+
+                        'nombre'     => $request->input('nombre_tipo'),
+                    ]);
+
                 $record = becas::create([
 
-                        'id_entidad'     => $request->input('id_entidad'),
-                        'id_tipo'        => $request->input('id_tipo'),
+                        'id_entidad'     => $request->input($id_tipo),
+                        // 'id_tipo'        =>auth()->user()->id_tipo,
                         'id_grado'       => $request->input('id_grado'),
                         'descripcion'     => $request->input('descripcion'),
                         'Lugar'           => $request->input('Lugar'),
@@ -55,31 +59,8 @@ class BecasController extends Controller
                         'fecha_fin'     => $request->input('fecha_fin'),
                         'Nombre'       => $request->input('Nombre'  ),
                     ]);
-                if ($record) {
-                    $this->status_code = 200;
-                    $this->result      = true;
-                    $this->message     = 'Cliente creado correctamente.';
-                    $this->records     = $record;
-                } else {
-                    throw new \Exception('El cliente no pudo ser creado.');
-                }
-            } else {
-                throw new \Exception('Ya existe este cliente.');
-            }
-
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-
-            return response()->json($response, $this->status_code);
-        }
+              
+          
     }
 
     public function show($id) {
@@ -116,9 +97,9 @@ class BecasController extends Controller
             } else {
             $record = becas::find($id);
             if ($record) {
-                $record->id_entidad     => $request->input('id_entidad',$record->id_entidad );
-                $record->id_tipo        => $request->input('id_tipo',$record->id_tipo);
-                $record->id_grado       => $request->input('id_grado', $record->id_grado);
+                $record->id_entidad     = $request->input('id_entidad',$record->id_entidad );
+                $record->id_tipo        = $request->input('id_tipo',$record->id_tipo);
+                $record->id_grado       = $request->input('id_grado', $record->id_grado);
                 $record->descripcion         = $request->input('descripcion', $record->descripcion);
                 $record->Lugar            = $request->input('Lugar', $record->Lugar);
                 $record->fecha_inicio       = $request->input('fecha_inicio', $record->fecha_inicio);

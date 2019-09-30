@@ -8,9 +8,10 @@ class becas extends Model
 {
     //
 	protected $table = 'becas';
+   protected $primaryKey = 'id_becas';  
     protected $fillable = [
          
-        	  'id_becas' ,
+        	 
 			  'id_entidad' ,
 			  'id_tipo' ,
 			  'descripcion' ,
@@ -22,6 +23,7 @@ class becas extends Model
 
 			   
     	];
+       public $timestamps = false;
 
   public function entidad()
   {

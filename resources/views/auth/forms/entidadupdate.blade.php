@@ -3,30 +3,13 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">{{ __('Registra tu datos') }}</div>
-            <div class="card-body">
-                <form  method="POST" action="{{ route('registar.usuario') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="id_carrera" class="col-md-4 col-form-label text-md-right">{{ __('Profesion') }}</label>
-                        <div class="col-md-6">
-                            <select id="id_carrera" type="text" class="form-control{{ $errors->has('id_carrera') ? ' is-invalid' : '' }}" name="id_carrera">
-                                @foreach ($profesion as $profesion)
-                                  @if($profesion->lista == 'CCH_EC_Escolaridad')
-                                    <option value="{{$profesion->id_carrera}}">{{ $profesion->carrera }}</option>
-                                  @endif
-                                @endforeach
-                            </select>
-                            @if ($errors->has('id_carrera'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('id_carrera') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-               
-                    
 
+            <div class="card-header">{{ __('Registra tu datos') }}</div>
+
+            <div class="card-body">
+                <form  method="POST" action="{{ route('update.entidad') }}" enctype="multipart/form-data">
+                  @method('PUT')
+                     @csrf
                      <div class="form-group row">
                         <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
@@ -55,6 +38,7 @@
                         </div>
                     </div>
 
+
                     <div class="form-group row">
                         <label for="id_pais" class="col-md-4 col-form-label text-md-right">{{ __('Pais') }}</label>
                         <div class="col-md-6">
@@ -81,7 +65,7 @@
                                     <strong>{{ $errors->first('pagina_Web') }}</strong>
                                 </span>
                             @endif
-                        </div>
+                        </div>  
                     </div>
 
                     <div class="form-group row">
@@ -94,7 +78,7 @@
                                     <strong>{{ $errors->first('sector') }}</strong>
                                 </span>
                             @endif
-                        </div>
+                        </div>  
                     </div>
 
                     <div class="form-group row">
@@ -106,7 +90,7 @@
                                     <strong>{{ $errors->first('logo') }}</strong>
                                 </span>
                             @endif
-                        </div>
+                        </div>  
                     </div>
 
                     <div class="form-group row">
@@ -119,7 +103,7 @@
                                     <strong>{{ $errors->first('direccion') }}</strong>
                                 </span>
                             @endif
-                        </div>
+                        </div>  
                     </div>
 
                     <div class="form-group row">
@@ -132,7 +116,7 @@
                                     <strong>{{ $errors->first('Nit') }}</strong>
                                 </span>
                             @endif
-                        </div>
+                        </div>  
                     </div>
 
                     <div class="form-group row">
@@ -145,21 +129,13 @@
                                     <strong>{{ $errors->first('telefono') }}</strong>
                                 </span>
                             @endif
-                        </div>
+                        </div>  
                     </div>
 
                     <button type="submit" class="btn btn-info">Enviar</button>
                 </form>
             </div>
+            
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        console.log($('#id_carrera').val());
-        $('select #id_carrera').on('change', function() {
-            alert( this.value );
-        });
-    </script>
-@endpush
