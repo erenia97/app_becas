@@ -57,23 +57,24 @@ class EntidadesController extends Controller
 
     public function update(Request $request, $id_entidad) {
 
-        $record = entidades::find($id_entidad);
+        $records = entidades::find($id_entidad);
+        $paises = pais::all();
 
-        if ($record) {
-            $record->id_tipo = auth()->user()->id_tipo;
-            $record->Nombre = $request->input('Nombre', $record->Nombre);
-            $record->Razon_social = $request->input('Razon_social', $record->Razon_social);
-            $record->id_pais = $request->input('id_pais', $record->id_pais);
-            $record->pagina_Web = $request->input('pagina_Web', $record->pagina_Web);
-            $record->sector = $request->input('sector', $record->sector);
-            $record->logo = $request->input('logo', $record->logo);
-            $record->direccion = $request->input('direccion', $record->direccion);
-            $record->Nit = $request->input('Nit', $record->Nit);
-            $record->telefono = $request->input('telefono', $record->telefono);
+        if ($records) {
+            // $records->id_tipo = auth()->user()->id_tipo;
+            $records->Nombre = $request->input('Nombre', $records->Nombre);
+            $records->Razon_social = $request->input('Razon_social', $records->Razon_social);
+            $records->id_pais = $request->input('id_pais', $records->id_pais);
+            $records->pagina_Web = $request->input('pagina_Web', $records->pagina_Web);
+            $records->sector = $request->input('sector', $records->sector);
+            $records->logo = $request->input('logo', $records->logo);
+            $records->direccion = $request->input('direccion', $records->direccion);
+            $records->Nit = $request->input('Nit', $records->Nit);
+            $records->telefono = $request->input('telefono', $records->telefono);
 
-            $record->save();
+            $records->save();
         }
-        return view('auth.forms.editarentidad');
+        return view('auth.forms.entidadupdate', compact('records', 'paises'));
     }
 
 

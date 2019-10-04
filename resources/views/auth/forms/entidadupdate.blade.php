@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <select id="id_pais" type="text" class="form-control" name="id_pais">
                                  @foreach ($paises as $pais)
-                                    <option value="{{$pais->id_pais}}">{{ $pais->nombre_pais }}</option>
+                                    <option value="{{$pais->id_pais}}" @if($pais->id_pais == $records->id_pais) selected @endif>{{ $pais->nombre_pais }}</option>
                                  @endforeach
                             </select>
                             @if ($errors->has('id_pais'))
