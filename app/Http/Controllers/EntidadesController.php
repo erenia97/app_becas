@@ -9,29 +9,24 @@ use App\User;
 use DB;
 class EntidadesController extends Controller
 {
-  
+
  protected $result      = false;
     protected $message     = 'Ocurrió un problema al procesar su solicitud';
     protected $records     = array();
     protected $status_code = 400;
-    
+
     public function index() {
          $paises = pais::all();
           $user    = auth()->user();
        //  $cliente = User::where('id_tipo', $user->id_tipo)->get();
-       
+
          $dato  = DB::table('tipo_usuario')->join('entidades', 'entidades.id_tipo', '=', 'tipo_usuario.id_tipo')
                  ->where('entidades.id_tipo', '=', $user->id_tipo)->value('entidades.id_entidad');
 
 
-       
-     $records   = DB::table('entidades')->where('id_entidad','=',$dato)->GET();
+         $records   = DB::table('entidades')->where('id_entidad', $dato)->first();
 
-     //entidades::all()->where('id_entidad','=',$dato)->first();
-     //{{dd($record)}}
-      
- //dd($records);
-        return view('auth.forms.entidadupdate', compact('records',$records,'paises',$paises));
+        return view('auth.forms.entidadupdate', compact('records','paises'));
     }
 
     public function store(Request $request) {
@@ -45,27 +40,27 @@ class EntidadesController extends Controller
           'logo'               => $request->logo->store('', 'public'),
           'direccion'          => $request->input(    'direccion'),
           'Nit'                => $request->input(          'Nit'),
-          'telefono'           => $request->input(     'telefono'),         
+          'telefono'           => $request->input(     'telefono'),
         ]);
 
         return redirect()->route('home');
-                
+
     }
 
     public function show($records) {
 
-    
+
 
       //      $record = entidades::all->where($dato,'=','id_entidad');
-          
+
     }
 
     public function update(Request $request, $id_entidad) {
 
             $record = entidades::find($id_entidad);
             if ($record) {
-      
-    
+
+
                       //$record->d_entidad         => $request->input('d_entidad'   , $record->d_entidad   );
                       $record->id_tipo            =auth()->user()->id_tipo;
                       $record->Nombre            = $request->input(       'Nombre', $record->Nombre      );
@@ -76,14 +71,14 @@ class EntidadesController extends Controller
                       $record->logo              = $request->input(         'logo', $record->logo        );
                       $record->direccion         = $request->input(    'direccion', $record->direccion   );
                       $record->Nit               = $request->input(          'Nit', $record->Nit         );
-                      $record->telefono           = $request->input(     'telefono', $record->telefono    );  
-       
+                      $record->telefono           = $request->input(     'telefono', $record->telefono    );
+
                 $record->save();
-              
-        } 
+
+        }
           return view('auth.forms.editarentidad');
     }
-    
+
 
     public function destroy($id) {
         try {
