@@ -11,9 +11,10 @@ class contacto extends Model
 
 
     protected $table = 'contacto';
+      protected $primaryKey = 'id_contacto';  
     protected $fillable = [
        
-        	 'id_contacto',
+        	 
 			  'id_entidad' ,
 			  'nombre' ,
 			  'apellido' ,
@@ -21,6 +22,8 @@ class contacto extends Model
 			  'correo',
 			   
     	];
+
+          public $timestamps = false;
 
     	  public function entidades()
   {

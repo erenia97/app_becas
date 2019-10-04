@@ -10,23 +10,40 @@
                 <form  method="POST" action="{{ route('registar.beca') }}" enctype="multipart/form-data">
                      @csrf
 
-                     <div class="form-group row">
-                        <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Tipo de beca') }}</label>
+                  <div class="form-group row">
+                        <label for="nombre_beca" class="col-md-4 col-form-label text-md-right">{{ __('Ingrese el tipo de Beca') }}</label>
                         <div class="col-md-6">
-                            <input id="nombre_tipo" type="text" class="form-control{{ $errors->has('Nombre') ? ' is-invalid' : '' }}" name="nombre_tipo" value="{{ old('Nombre') }}">
+                            <input id="nombre_beca" type="text" class="form-control{{ $errors->has('nombre_beca') ? ' is-invalid' : '' }}" name="nombre_beca" value="{{ old('nombre_beca') }}">
 
-                            @if ($errors->has('Nombre'))
+                            @if ($errors->has('nombre_beca'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('Nombre') }}</strong>
+                                    <strong>{{ $errors->first('nombre_beca') }}</strong>
                                 </span>
                             @endif
-                        </div>  
+                        </div>
                     </div>
 
 
-                   
-                     <div class="form-group row">
-                        <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre de beca') }}</label>
+
+
+                          <div class="form-group row">
+                        <label for="nombre_Carrera" class="col-md-4 col-form-label text-md-right">{{ __('Profesion a Especializarce') }}</label>
+                        <div class="col-md-6">
+                            <input id="nombre_Carrera" type="text" class="form-control{{ $errors->has('nombre_Carrera') ? ' is-invalid' : '' }}" name="nombre_Carrera" value="{{ old('nombre_Carrera') }}">
+
+                            @if ($errors->has('nombre_Carrera'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('nombre_Carrera') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+        
+
+        
+                          <div class="form-group row">
+                        <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre de la beca') }}</label>
                         <div class="col-md-6">
                             <input id="Nombre" type="text" class="form-control{{ $errors->has('Nombre') ? ' is-invalid' : '' }}" name="Nombre" value="{{ old('Nombre') }}">
 
@@ -35,8 +52,12 @@
                                     <strong>{{ $errors->first('Nombre') }}</strong>
                                 </span>
                             @endif
-                        </div>  
+                        </div>
                     </div>
+
+        
+
+                    
 
 
                     <div class="form-group row">
@@ -59,10 +80,7 @@
                         " class="col-md-4 col-form-label text-md-right">{{ __('Lugar de Beca') }}</label>
                         <div class="col-md-6">
                             <input id="lugar
-                            " type="text" class="form-control{{ $errors->has('lugar
-                            ') ? ' is-invalid' : '' }}" name="lugar
-                            " value="{{ old('lugar
-                            ') }}">
+                            " type="text" class="form-control{{ $errors->has('lugar') ? ' is-invalid' : '' }}" name="lugar" value="{{ old('lugar') }}">
 
                             @if ($errors->has('lugar'))
                                 <span class="invalid-feedback" role="alert">
@@ -118,4 +136,5 @@
         </div>
     </div>
 @endsection
+
 

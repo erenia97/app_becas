@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\entidades;
+use App\pais;
 use App\User;
+use DB;
 class EntidadesController extends Controller
 {
   
@@ -14,25 +16,22 @@ class EntidadesController extends Controller
     protected $status_code = 400;
     
     public function index() {
-        try {
-            $records           = entidades::all();
-            $this->status_code = 200;
-            $this->result      = true;
-            $this->message     = 'Registros consultados correctamente';
-            $this->records     = $records;
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+         $paises = pais::all();
+          $user    = auth()->user();
+       //  $cliente = User::where('id_tipo', $user->id_tipo)->get();
+       
+         $dato  = DB::table('tipo_usuario')->join('entidades', 'entidades.id_tipo', '=', 'tipo_usuario.id_tipo')
+                 ->where('entidades.id_tipo', '=', $user->id_tipo)->value('entidades.id_entidad');
 
-            return response()->json($response, $this->status_code);
-        }
+
+       
+     $records   = DB::table('entidades')->where('id_entidad','=',$dato)->GET();
+
+     //entidades::all()->where('id_entidad','=',$dato)->first();
+     //{{dd($record)}}
+      
+ //dd($records);
+        return view('auth.forms.entidadupdate', compact('records',$records,'paises',$paises));
     }
 
     public function store(Request $request) {
@@ -53,44 +52,22 @@ class EntidadesController extends Controller
                 
     }
 
-    public function show($id) {
-        try {
-            $record = entidades::find($id);
-            if ($record) {
-                $this->status_code = 200;
-                $this->result      = true;
-                $this->message     = 'Cliente consultado correctamente';
-                $this->records     = $record;
-            } else {
-                throw new \Exception('Cliente no encontrado');
-            }
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+    public function show($records) {
 
-            return response()->json($response, $this->status_code);
-        }
+    
+
+      //      $record = entidades::all->where($dato,'=','id_entidad');
+          
     }
 
     public function update(Request $request, $id_entidad) {
-        try {
-          //  $validacion = entidades::where('nit',$request->input('nit'))->first();                   
-           // if ($validacion == true && $validacion->id != $id) {
-             //   throw new \Exception('Ya existe este cliente.');
-            //} else {
+
             $record = entidades::find($id_entidad);
             if ($record) {
       
     
                       //$record->d_entidad         => $request->input('d_entidad'   , $record->d_entidad   );
-                      $record->id_tipo            = $request->input(      'id_tipo', $record->id_tipo      );
+                      $record->id_tipo            =auth()->user()->id_tipo;
                       $record->Nombre            = $request->input(       'Nombre', $record->Nombre      );
                       $record->Razon_social      = $request->input( 'Razon_social', $record->Razon_social);
                       $record->id_pais           = $request->input(      'id_pais', $record->id_pais      );
@@ -102,31 +79,9 @@ class EntidadesController extends Controller
                       $record->telefono           = $request->input(     'telefono', $record->telefono    );  
        
                 $record->save();
-                if ($record->save()) {
-                    $this->status_code  = 200;
-                    $this->result       = true;
-                    $this->message      = 'Cliente actualizado correctamente';
-                    $this->records      = $record;
-                } else {
-                    throw new \Exception('El cliente no pudo ser actualizado');
-                }
-                } else {
-                        $this->message = 'El cliente no existe';
-                        throw new \Exception('El cliente no existe');
-          //      }
-            }
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-            return response()->json($response, $this->status_code);
-        }
+              
+        } 
+          return view('auth.forms.editarentidad');
     }
     
 

@@ -8,10 +8,12 @@ class beneficios extends Model
 {
     //
 
-    protected $table = 'benificios';
+    protected $table = 'beneficios';
+       protected $primaryKey = 'id_beneficio';  
+   
     protected $fillable = [
        
-        	  'id_beneficio',
+        	  
   			  'id_becas' ,
 			  'descripcion' ,
 			  'lugar',
@@ -21,7 +23,7 @@ class beneficios extends Model
 			   
     	];
 
-  
+    public $timestamps = false;
 
   public function becas()
   {

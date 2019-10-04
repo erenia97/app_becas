@@ -20,6 +20,8 @@ class becas extends Model
 			  'fecha_fin',
 			  'id_grado' ,
 			  'Nombre' ,
+        'nombre_carrera' ,
+        'tipo_beca' ,
 
 			   
     	];

@@ -8,6 +8,8 @@ use App\becas;
 use App\tipo_becas;
 use App\carreras;
 use App\entidades;
+use app\User;
+use DB;
 
 
 
@@ -41,23 +43,22 @@ class BecasController extends Controller
     }
 
     public function store(Request $request) {
-          $id_tipo = entidades::find(['id_tipo']);
 
-             $becas = tipo_becas::create([
-
-                        'nombre'     => $request->input('nombre_tipo'),
-                    ]);
-
-                $record = becas::create([
-
-                        'id_entidad'     => $request->input($id_tipo),
-                        // 'id_tipo'        =>auth()->user()->id_tipo,
-                        'id_grado'       => $request->input('id_grado'),
-                        'descripcion'     => $request->input('descripcion'),
-                        'Lugar'           => $request->input('Lugar'),
-                        'fecha_inicio'    => $request->input('fecha_inicio'),
-                        'fecha_fin'     => $request->input('fecha_fin'),
-                        'Nombre'       => $request->input('Nombre'  ),
+         $user    = auth()->user();
+         $cliente = User::where('id_tipo', $user->id_tipo)->first();
+         $dato  = DB::table('tipo_usuario')->join('entidades', 'entidades.id_tipo', '=', 'tipo_usuario.id_tipo')
+                 ->where('entidades.id_tipo', '=', $cliente->id_tipo)->value('entidades.id_entidad');
+         
+              $record = becas::create([
+                        
+                        'id_entidad'     =>$dato,  
+                        'descripcion'     =>$request->input('descripcion'),
+                        'lugar'           =>$request->input('lugar'),
+                        'fecha_inicio'    => date("Y-m-d",strtotime($request->input('fecha_inicio'))),
+                        'fecha_fin'       => date("Y-m-d", strtotime($request->input('fecha_fin'))),
+                        'Nombre'          =>$request->input('Nombre'  ),
+                         'nombre_carrera' =>$request->input('nombre_Carrera'  ),
+                        'tipo_beca'       =>$request->input('nombre_beca'  ),
                     ]);
               
           

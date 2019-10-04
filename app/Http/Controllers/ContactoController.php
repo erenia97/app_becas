@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\etnidades;
+use App\entidades;
 use App\contacto;
+use App\usuarios;
+use App\User;
+use DB;
 
 class ContactoController extends Controller
 {
@@ -37,42 +40,21 @@ class ContactoController extends Controller
     }
 
     public function store(Request $request) {
-        try {
-            $validacion = contacto::where("nit", $request->input('nit'))->first();
-            if (!$validacion) {
+           $user    = auth()->user();
+          $cliente = User::where('id_tipo', $user->id_tipo)->first();
+         $dato  = DB::table('tipo_usuario')->join('entidades', 'entidades.id_tipo', '=', 'tipo_usuario.id_tipo')
+                 ->where('entidades.id_tipo', '=', $cliente->id_tipo)->value('entidades.id_entidad');
+         
+         
                 $record = contacto::create([
 
-              'id_entidad'    => $request->input('id_entidad'),
-              'nombre'        => $request->input('nombre'),
+              'id_entidad'    => $dato, 
+              'nombre'        => $request->input('Nombre'),
               'apellido'      => $request->input('apellido'),
               'telefono'      => $request->input('telefono'),
-              'correo'        => $request->input('correo'),
+              'correo'        => $request->input('email'),
                                     ]);
-                if ($record) {
-                    $this->status_code = 200;
-                    $this->result      = true;
-                    $this->message     = 'Cliente creado correctamente.';
-                    $this->records     = $record;
-                } else {
-                    throw new \Exception('El cliente no pudo ser creado.');
-                }
-            } else {
-                throw new \Exception('Ya existe este cliente.');
-            }
-
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-
-            return response()->json($response, $this->status_code);
-        }
+              
     }
 
     public function show($id) {
@@ -101,7 +83,7 @@ class ContactoController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id) {/*
         try {
             $validacion = contacto::where('id_entidad',$request->input('id_entidad'))->first();                   
             if ($validacion == true && $validacion->id != $id) {
@@ -110,11 +92,11 @@ class ContactoController extends Controller
             $record = contacto::find($id);
             if ($record) {
 
-               $record->id_entidad    => $request->input('id_entidad', $record->id_entidad);
-               $record->nombre        => $request->input('nombre',$record->nombre);
-               $record->apellido      => $request->input('apellido',$record->apellido);
-               $record->telefono      => $request->input('telefono', $record->telefono);
-               $record->correo        => $request->input('correo',$record->correo);
+               $record->id_entidad    = $request->input('id_entidad', $record->id_entidad);
+               $record->nombre        = $request->input('nombre',$record->nombre);
+               $record->apellido      = $request->input('apellido',$record->apellido);
+               $record->telefono      = $request->input('telefono', $record->telefono);
+               $record->correo        = $request->input('correo',$record->correo);
                 
                 $record->save();
                 if ($record->save()) {
@@ -141,7 +123,7 @@ class ContactoController extends Controller
                 'records' => $this->records,
             ];
             return response()->json($response, $this->status_code);
-        }
+        }*/
     }
     
 
@@ -170,7 +152,6 @@ class ContactoController extends Controller
             return response()->json($response, $this->status_code);
         }
     }
-32
 
 
 }

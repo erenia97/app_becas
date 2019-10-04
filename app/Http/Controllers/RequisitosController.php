@@ -35,47 +35,20 @@ class RequisitosController extends Controller
     }
 
     public function store(Request $request) {
-        try {
-           // $validacion = requisitos::where("nit", $request->input('nit'))->first();
+             // $validacion = requisitos::where("nit", $request->input('nit'))->first();
            // if (!$validacion) {
                 $record = requisitos::create([
 
                       
                      'id_beca'   => $request->input('id_beca'  ),
                      'edad'      => $request->input('edad'     ),
-                     'profesion' => $request->input('profesion'),
+                     'profesion' => $request->input('Profesion'),
                      'sexo'      => $request->input('sexo'     ),
-
-                    ,         
+                       
                      
                     ]);
-                if ($record) {
-                    $this->status_code = 200;0000000000000.
+               
 
-                    $this->result      = true;
-                    $this->message     = 'Cliente creado correctamente.';
-                    $this->records     = $record;
-                } else {
-                    throw new \Exception('El cliente no pudo ser creado.');
-                }
-            //} 
-            else {
-                throw new \Exception('Ya existe este cliente.');
-            }
-
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-
-            return response()->json($response, $this->status_code);
-        }
     }
 
     public function show($id) {
@@ -115,10 +88,10 @@ class RequisitosController extends Controller
    
                       //$record->d_entidad         => $request->input('d_entidad'   , $record->d_entidad   );
 
-                      $record->id_beca   => $request->input('id_beca'  ,$record->id_beca  );
-                      $record->edad      => $request->input('edad'     ,$record->edad     );
-                      $record->profesion => $request->input('profesion',$record->profesion);
-                      $record->sexo      => $request->input('sexo'     ,$record->sexo     );
+                      $record->id_beca   = $request->input('id_beca'  ,$record->id_beca  );
+                      $record->edad      = $request->input('edad'     ,$record->edad     );
+                      $record->profesion = $request->input('profesion',$record->profesion);
+                      $record->sexo      = $request->input('sexo'     ,$record->sexo     );
        
                 $record->save();
                 if ($record->save()) {

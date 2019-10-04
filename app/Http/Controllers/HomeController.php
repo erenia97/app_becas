@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\usuarios;
 use Illuminate\Http\Request;
 use App\pais;
+use App\becas;
 use App\carreras;
+use App\tipo_Becas;
+use App\requisitos;
+use App\contacto;
 
 class HomeController extends Controller
 {
@@ -28,10 +32,33 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
        public function becas()
     {
-        return view('auth.forms.crearbecas');
+          $tipobeca= tipo_becas::all();
+        return view('auth.forms.crearbecas', compact('tipobeca'));
     }
+
+     public function contacto()
+    {
+          $tipobeca= tipo_becas::all();
+        return view('auth.forms.contacto', compact('tipobeca'));
+    }
+
+  public function requisitos()
+    {
+          $requisitos= becas::all();
+        return view('auth.forms.requisitos', compact('requisitos'));
+    }
+
+
+
+  public function beneficios()
+    {
+          $beneficios= becas::all();
+        return view('auth.forms.beneficios', compact('beneficios'));
+    }
+
 
     public function forms()
     {

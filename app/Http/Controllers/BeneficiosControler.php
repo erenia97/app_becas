@@ -36,42 +36,16 @@ class BeneficiosControler extends Controller
     }
 
     public function store(Request $request) {
-        try {
-            $validacion = beneficios::where("id_becas", $request->input('id_becas'))->first();
-            if (!$validacion) {
+    
                 $record = beneficios::create([
-                        'id_becas'        => $request->input('id_becas'),                       
+                        'id_becas'        => $request->input('id_beca'),                       
                         'descripcion'     => $request->input('descripcion'),
                          'lugar'          => $request->input('lugar'),
                          'cobertura'      => $request->input('cobertura'),
-                         'tiempo'         => $request->input('tiempo'),
+                         'Tiempo'         => $request->input('tiempo'),
                         
                     ]);
-                if ($record) {
-                    $this->status_code = 200;
-                    $this->result      = true;
-                    $this->message     = 'Proveedor creado correctamente.';
-                    $this->records     = $record;
-                } else {
-                    throw new \Exception('El proveedor no pudo ser creado.');
-                }
-            } else {
-                throw new \Exception('Ya existe este proveedor.');
-            }
-
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-
-            return response()->json($response, $this->status_code);
-        }
+                
     }
 
     public function show($id) {

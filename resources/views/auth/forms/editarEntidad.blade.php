@@ -9,11 +9,11 @@
             <div class="card-body">
 
 
-
   @foreach ($records as $record)
  
-               <form  method="POST" action="{{ route('update.entidad') }}" enctype="multipart/form-data">
+               <form  method="POST" action="{{ route('update.entidad', $record->id_entidad) }}" enctype="multipart/form-data">
      @endforeach   
+
                 @method('PUT')
               
                      @csrf
@@ -161,12 +161,11 @@
                     <div class="form-group row">
                       <div class="col-md-2">
 
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                        <a class="btn btn-link" href="{{ route('update.update.entidad', $record->id_entidad) }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
 
-                       <button href="{{ route('update.update.entidad', $record->id_entidad) }}" class="btn btn-info">Guardar</button>  
-                  
+                         <button href="{{ route('update.update.entidad', $record->id_entidad) }}" class="btn btn-danger">Guardar</button>  
                         </div>
                           <button type="submit" class="btn btn-danger">Cancelar</button>
                         
