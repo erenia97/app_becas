@@ -57,26 +57,23 @@ class EntidadesController extends Controller
 
     public function update(Request $request, $id_entidad) {
 
-            $record = entidades::find($id_entidad);
-            if ($record) {
+        $record = entidades::find($id_entidad);
 
+        if ($record) {
+            $record->id_tipo = auth()->user()->id_tipo;
+            $record->Nombre = $request->input('Nombre', $record->Nombre);
+            $record->Razon_social = $request->input('Razon_social', $record->Razon_social);
+            $record->id_pais = $request->input('id_pais', $record->id_pais);
+            $record->pagina_Web = $request->input('pagina_Web', $record->pagina_Web);
+            $record->sector = $request->input('sector', $record->sector);
+            $record->logo = $request->input('logo', $record->logo);
+            $record->direccion = $request->input('direccion', $record->direccion);
+            $record->Nit = $request->input('Nit', $record->Nit);
+            $record->telefono = $request->input('telefono', $record->telefono);
 
-                      //$record->d_entidad         => $request->input('d_entidad'   , $record->d_entidad   );
-                      $record->id_tipo            =auth()->user()->id_tipo;
-                      $record->Nombre            = $request->input(       'Nombre', $record->Nombre      );
-                      $record->Razon_social      = $request->input( 'Razon_social', $record->Razon_social);
-                      $record->id_pais           = $request->input(      'id_pais', $record->id_pais      );
-                      $record->pagina_Web        = $request->input(   'pagina_Web', $record->pagina_Web  );
-                      $record->sector            = $request->input(       'sector', $record->sector      );
-                      $record->logo              = $request->input(         'logo', $record->logo        );
-                      $record->direccion         = $request->input(    'direccion', $record->direccion   );
-                      $record->Nit               = $request->input(          'Nit', $record->Nit         );
-                      $record->telefono           = $request->input(     'telefono', $record->telefono    );
-
-                $record->save();
-
+            $record->save();
         }
-          return view('auth.forms.editarentidad');
+        return view('auth.forms.editarentidad');
     }
 
 
