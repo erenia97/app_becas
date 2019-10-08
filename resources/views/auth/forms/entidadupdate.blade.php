@@ -11,6 +11,7 @@
 
                <form  method="POST" action="{{ route('update.update.entidad', $records->id_entidad) }}" enctype="multipart/form-data">
                      @csrf
+                     
                      <div class="form-group row">
                         <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                          <div class="col-md-6">
@@ -73,6 +74,8 @@
                         <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label>
                         <div class="col-md-6">
                             <img style="width:50%" src="{{ url('storage/'.$records->logo)  }}">
+                            <input id="logo" type="file" class="form-control{{ $errors->has('logo') ? ' is-invalid' : '' }}" name="logo">
+                   
                             @if ($errors->has('logo'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('logo') }}</strong>
@@ -80,6 +83,8 @@
                             @endif
                         </div>
                     </div>
+
+
 
                     <div class="form-group row">
                         <label for="direccion" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
@@ -121,14 +126,42 @@
                       </div>
 
                     <div class="form-group row">
-                      <div class="col-md-2">
+                      <div class="col-md-6">
                           <button type="submit" class="btn btn-info">Guardar</button>
                           <button class="btn btn-danger">Cancelar</button>
+                
+
+               
                       </div>
                     </div>
+
+
+
+             
+
+
                 </form>
+
+
             </div>
 
         </div>
-    </div>
+ 
+
+                  
+
+      </div>
+
+
+   <!--          <div class="form-group row">
+                      <div class="col-md-6">
+  <form action="{{ route('eliminarentidad', $records->id_entidad) }}" method="POST" style="display: inline">
+                        @csrf @method('DELETE')                
+                    
+                    <button class="btn btn-danger" onclick="return confirm('you re sure you want to delete this post ?')"><i class="fa fa-times"></i>
+                    Eliminar
+                 </button>                         
+                 </form>
+                 </div>
+                    </div> EJEMPLO DE ELIMINAR--> 
 @endsection

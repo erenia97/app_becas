@@ -13,7 +13,6 @@ class becas extends Model
          
         	 
 			  'id_entidad' ,
-			  'id_tipo' ,
 			  'descripcion' ,
 			  'lugar' ,
 			  'fecha_inicio',

@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\becas;
+use App\tipo_becas;
+use App\carreras;
+use App\entidades;
+use App\beneficios;
+use app\User;
+use DB;
+
 
 class UsuariosController extends Controller
 {
@@ -14,6 +22,12 @@ class UsuariosController extends Controller
     public function index()
     {
         //
+    
+       
+            $records           = becas::all();
+
+           return view('auth.forms.BecasIndexUsuarios', compact('records'));
+
     }
 
     /**

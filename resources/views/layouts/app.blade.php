@@ -20,7 +20,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
 
@@ -47,13 +51,13 @@
                         <!-- Authentication Links -->
                            @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                             </li>
                         @else
-
+                              @if ( Auth::user()->tipo_usuario == 1 )
                             <li class="nav-item dropdown">
 
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -61,7 +65,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}">
+                                    <a class="dropdown-item" href="{{ route('update.entidad') }}">
                                         {{ __('Perfil') }}
                                     </a>
 
@@ -76,6 +80,32 @@
                                     </form>
                                 </div>
                             </li>
+                            @else
+
+                            <li class="nav-item dropdown">
+
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} 
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('update.cliente') }}">
+                                        {{ __('Perfil') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+
+                            @endif
                         
                     </ul>
 
@@ -104,12 +134,18 @@
                                 <a class="text-md-left btn btn-light nav-link" href="{{ route('contacto') }}">{{ __('Contacto') }}</a>
                             </li>
                              <li class="nav-item">
-                                <a class="text-md-left btn btn-light nav-link" href="{{ route('becas.requisitos') }}">{{ __('Becas Publicadas') }}</a>
+                                <a class="text-md-left btn btn-light nav-link" href="{{ route('becas.index') }}">{{ __('Becas Publicadas') }}</a>
                             </li>
 
                             @else 
                              <li class="nav-item">
-                                <a class="text-md-left btn btn-light" href="{{ route('home') }}">{{ __('Perfil') }}</a>
+                                <a class="text-md-left btn btn-light nav-link" href="{{ route('home') }}">{{ __('Ver Perfil') }}</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="text-md-left btn btn-light nav-link" href="{{ route('home') }}">{{ __('Becas Aplicadas') }}</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="text-md-left btn btn-light nav-link" href="{{ route('usuariosbecas.index') }}">{{ __('Becas Disponibles') }}</a>
                             </li>
                             @endif
                 </ul>
@@ -122,10 +158,10 @@
         </main>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
    
 @stack('scripts')

@@ -10,6 +10,9 @@ use App\carreras;
 use App\tipo_Becas;
 use App\requisitos;
 use App\contacto;
+use App\idioma;
+use App\nivel;
+
 
 class HomeController extends Controller
 {
@@ -64,7 +67,9 @@ class HomeController extends Controller
     {
         $user = auth()->user();
         $profesion= carreras::all();
+          $idioma= idioma::all();
         $paises = pais::all();
+        $nivel = nivel::all();
 
 
         $cliente = usuarios::where('id_tipo', $user->id_tipo)->first();
@@ -74,7 +79,7 @@ class HomeController extends Controller
         }
 
         if ($user->tipo_usuario == 0) {
-            return view('auth.forms.usuario', compact('paises','profesion'));
+            return view('auth.forms.usuario', compact('paises','profesion','idioma','nivel'));
         }
 
         if ($user->tipo_usuario == 1) {

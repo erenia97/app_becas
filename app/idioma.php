@@ -9,10 +9,13 @@ class idioma extends Model
     //
 
     protected $table = 'idioma';
-    protected $fillable = [
+
+ protected $primaryKey = 'id_idioma';
+ protected $fillable = [
        
-        	'id_idioma',
+        	
  			'nombre' ,
 			   
     	];
+    	  public $timestamps = false;   
 }
