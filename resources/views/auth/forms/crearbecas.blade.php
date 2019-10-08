@@ -90,19 +90,7 @@
                         </div>  
                     </div>
 
-                    <div class="form-group row">
-                        <label for="sector" class="col-md-4 col-form-label text-md-right">{{ __('Sector') }}</label>
-                        <div class="col-md-6">
-                            <input id="sector" type="text" class="form-control{{ $errors->has('sector') ? ' is-invalid' : '' }}" name="sector" value="{{ old('sector') }}">
-
-                            @if ($errors->has('sector'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('sector') }}</strong>
-                                </span>
-                            @endif
-                        </div>  
-                    </div>
-
+                  
                     <div class="form-group row">
                         <label for="fecha_inicio" class="col-md-4 col-form-label text-md-right">{{ __('Fecha iniciacion para aplicar') }}</label>
                         <div class="col-md-6">

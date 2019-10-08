@@ -8,6 +8,7 @@ use App\becas;
 use App\tipo_becas;
 use App\carreras;
 use App\entidades;
+use App\beneficios;
 use app\User;
 use DB;
 
@@ -21,25 +22,15 @@ class BecasController extends Controller
     protected $status_code = 400;
     
     public function index() {
-        try {
-            $records           = becas::all();
-            $this->status_code = 200;
-            $this->result      = true;
-            $this->message     = 'Registros consultados correctamente';
-            $this->records     = $records;
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+          $user    = auth()->user();
+         $cliente = User::where('id_tipo', $user->id_tipo)->first();
+         $dato  = DB::table('tipo_usuario')->join('entidades', 'entidades.id_tipo', '=', 'tipo_usuario.id_tipo')
+                 ->where('entidades.id_tipo', '=', $cliente->id_tipo)->value('entidades.id_entidad');
 
-            return response()->json($response, $this->status_code);
-        }
+
+            $records           = becas::all()->where('id_entidad','=',$dato);
+
+           return view('auth.forms.BecasIndex', compact('records'));
     }
 
     public function store(Request $request) {
@@ -60,105 +51,62 @@ class BecasController extends Controller
                          'nombre_carrera' =>$request->input('nombre_Carrera'  ),
                         'tipo_beca'       =>$request->input('nombre_beca'  ),
                     ]);
-              
+                   return view('home', compact('records','paises'));
           
     }
 
-    public function show($id) {
-        try {
-            $record = becas::find($id);
-            if ($record) {
-                $this->status_code = 200;
-                $this->result      = true;
-                $this->message     = 'Cliente consultado correctamente';
-                $this->records     = $record;
-            } else {
-                throw new \Exception('Cliente no encontrado');
-            }
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+    public function show($dato) {
 
-            return response()->json($response, $this->status_code);
-        }
+        $user    = auth()->user();
+         $cliente = User::where('id_tipo', $user->id_tipo)->first();
+      $records           = becas::all()->where('id_becas','=',$dato)->first();
+
+           return view('auth.forms.becasUpdate', compact('records'));
     }
 
-    public function update(Request $request, $id) {
-        try {
-            $validacion = becas::where('Lugar',$request->input('Lugar'))->first();                   
-            if ($validacion == true && $validacion->id != $id) {
-                throw new \Exception('Ya existe este cliente.');
-            } else {
-            $record = becas::find($id);
-            if ($record) {
-                $record->id_entidad     = $request->input('id_entidad',$record->id_entidad );
-                $record->id_tipo        = $request->input('id_tipo',$record->id_tipo);
-                $record->id_grado       = $request->input('id_grado', $record->id_grado);
-                $record->descripcion         = $request->input('descripcion', $record->descripcion);
-                $record->Lugar            = $request->input('Lugar', $record->Lugar);
-                $record->fecha_inicio       = $request->input('fecha_inicio', $record->fecha_inicio);
-                $record->fecha_fin      = $request->input('fecha_fin', $record->fecha_fin);
-                $record->Nombre        = $request->input('Nombre', $record->Nombre);
-                
-                $record->save();
-                if ($record->save()) {
-                    $this->status_code  = 200;
-                    $this->result       = true;
-                    $this->message      = 'Cliente actualizado correctamente';
-                    $this->records      = $record;
-                } else {
-                    throw new \Exception('El cliente no pudo ser actualizado');
-                }
-                } else {
-                        $this->message = 'El cliente no existe';
-                        throw new \Exception('El cliente no existe');
-                }
-            }
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-            return response()->json($response, $this->status_code);
+    public function update(Request $request, $id_becas) {
+        
+      
+
+        $records = becas::find($id_becas);
+      
+
+        if ($records) {
+            // $records->id_tipo = auth()->user()->id_tipo;
+            $records->descripcion       = $request->input('descripcion', $records->descripcion);
+            $records->lugar             = $request->input('lugar', $records->lugar);
+            $records->fecha_inicio       = date("Y-m-d", strtotime($request->input('fecha_inicio', $records->fecha_inicio)));
+             $records->fecha_fin          = date("Y-m-d", strtotime($request->input('fecha_fin', $records->fecha_fin)));
+            $records->Nombre      = $request->input('Nombre', $records->Nombre);
+            $records->nombre_carrera   = $request->input('nombre_carrera', $records->nombre_carrera);
+            $records->tipo_beca       = $request->input('tipo_beca', $records->tipo_beca);
+
+            $records->save();
+            return redirect('/registar/index');
         }
+                           
+
+
     }
     
 
-    public function destroy($id) {
-        try {
-            $record = becas::find($id);
-            if ($record) {
-                $record->delete();
-                $this->status_code = 200;
-                $this->result      = true;
-                $this->message     = 'Cliente eliminado correctamente.';
-            } else {
-                throw new \Exception('El cliente no pudo ser encontrado.');
-            }
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+    public function destroy($records) {
 
-            return response()->json($response, $this->status_code);
-        }
-    }
+         $request = becas::find($records)->first();
+         $de = beneficios::all()->where('id_becas','=',$records)->first();
+            /**
+             * undocumented constant
+             **/
+          
+       if ($de)
+              {
+            $de->delete();
+             $request->delete();
+          }
+       else
+        {
+             $request->Delete('cascade');
+
+       return redirect('/registar/index');
+    }}
 }

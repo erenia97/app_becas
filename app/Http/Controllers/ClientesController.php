@@ -8,7 +8,7 @@ use App\usuarios;
 use App\carreras;
 use App\pais;
 use App\User;
-
+Use DB;
 
 class ClientesController extends Controller
 {
@@ -18,25 +18,18 @@ class ClientesController extends Controller
     protected $status_code = 400;
 
     public function index() {
-        try {
-            $records           = usuarios::all();
-            $this->status_code = 200;
-            $this->result      = true;
-            $this->message     = 'Registros consultados correctamente';
-            $this->records     = $records;
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+         $paises = pais::all();
+          $user    = auth()->user();
+          $profesion= carreras::all();
+       //  $cliente = User::where('id_tipo', $user->id_tipo)->get();
 
-            return response()->json($response, $this->status_code);
-        }
+         $dato  = DB::table('tipo_usuario')->join('cliente', 'cliente.id_tipo', '=', 'tipo_usuario.id_tipo')
+                 ->where('cliente.id_tipo', '=', $user->id_tipo)->value('cliente.id_cliente');
+
+
+         $records   = DB::table('cliente')->where('id_cliente', $dato)->first();
+
+        return view('auth.forms.clientesUpdate', compact('records','paises','profesion'));
     }
 
     public function store(Request $request) {
@@ -61,7 +54,25 @@ class ClientesController extends Controller
         return route('layouts.forms.update-usuario');
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id_cliente) {
+  $records = entidades::find($id_cliente);
+        $paises = pais::all();
+
+        if ($records) {
+            // $records->id_tipo = auth()->user()->id_tipo;
+            $records->id_profesion = $request->input('id_profesion', $records->id_profesion);
+            $records->id_tipo = $request->input('id_tipo', $records->id_tipo);
+            $records->id_pais = $request->input('id_pais', $records->id_pais);
+            $records->Nombre = $request->input('Nombre', $records->Nombre);
+            $records->Apellido = $request->input('Apellido', $records->Apellido);
+            $records->Correo = $request->input('Correo', $records->Correo);
+            $records->telefono = $request->input('telefono', $records->telefono);
+            $records->direccion = $request->input('direccion', $records->direccion);
+              $records->fecha_nacimiento = $request->input('fecha_nacimiento', $records->fecha_nacimiento);
+            $records->sexo = $request->input('sexo', $records->sexo);
+            $records->save();
+        }
+        return view('auth.forms.clientesUpdate', compact('records', 'paises'));
 
     }
 

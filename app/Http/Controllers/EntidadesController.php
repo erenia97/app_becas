@@ -67,7 +67,10 @@ class EntidadesController extends Controller
             $records->id_pais = $request->input('id_pais', $records->id_pais);
             $records->pagina_Web = $request->input('pagina_Web', $records->pagina_Web);
             $records->sector = $request->input('sector', $records->sector);
-            $records->logo = $request->input('logo', $records->logo);
+            if ($request->has('logo')){
+            $records->logo = $request->logo->store('', 'public');
+        }
+           // $records->logo = $request->input('logo', $records->logo);
             $records->direccion = $request->input('direccion', $records->direccion);
             $records->Nit = $request->input('Nit', $records->Nit);
             $records->telefono = $request->input('telefono', $records->telefono);
@@ -78,30 +81,16 @@ class EntidadesController extends Controller
     }
 
 
-    public function destroy($id) {
-        try {
-            $record = entidades::find($id);
-            if ($record) {
-                $record->delete();
-                $this->status_code = 200;
-                $this->result      = true;
-                $this->message     = 'Cliente eliminado correctamente.';
-            } else {
-                throw new \Exception('El cliente no pudo ser encontrado.');
-            }
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
-
-            return response()->json($response, $this->status_code);
-        }
+    public function destroy($records) {
+        // ddl($id_entidad);
+           $request = entidades::find($records)->first();
+            /**
+             * undocumented constant
+             **/
+   
+            
+             $request->delete();
+        return redirect()->route('home')->with('flash', 'The publication has been deleted');
     }
 
 

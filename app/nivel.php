@@ -8,10 +8,12 @@ class nivel extends Model
 {
     //
      protected $table = 'nivel';
+      protected $primaryKey = 'id_nivel';
+
     protected $fillable = [
        
-        	'id_nivel',
- 		     'nombre_nivel' ,
+        	 		     'nombre_nivel' ,
 						   
     	];
+    		  public $timestamps = false;   
 }
