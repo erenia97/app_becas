@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('get/carreras', 'CarrerasController@carreras');
+Route::get('get/carreras/hijo', 'CarrerasController@carrerasHijo');

@@ -15,16 +15,9 @@
                             <select id="id_carrera" type="text" class="form-control{{ $errors->has('id_carrera') ? ' is-invalid' : '' }}" name="id_carrera">
 
                                 @foreach ($profesion as $profesion)
-                            
-                               
-
-                                  @if($profesion->lista == 'CCH_EC_Escolaridad')
-                          
-
-                                    <option value="{{$profesion->id_carrera}}" >{{ $profesion->carrera }}</option>
-
-                                      @endif
-
+                                    @if($profesion->lista == 'CCH_EC_Escolaridad')
+                                        <option value="{{$profesion->id_carrera}}">{{ $profesion->carrera }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             @if ($errors->has('id_carrera'))
@@ -36,11 +29,11 @@
                     </div>
 
 
-                    
+
                     <div class="form-group row">
                         <label for="id_profesion" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
                         <div class="col-md-6">
-                            <select id="id_profesion" type="text" style="" class="form-control{{ $errors->has('id_profesion') ? ' is-invalid' : '' }}" name="id_profesion">
+                            <select id="id_profesion" type="text" class="form-control{{ $errors->has('id_profesion') ? ' is-invalid' : '' }}" name="id_profesion">
                             </select>
                             @if ($errors->has('id_profesion'))
                                 <span class="invalid-feedback" role="alert">
@@ -149,7 +142,7 @@
                         <label for="sexo" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}</label>
                         <div class="col-md-6">
                             <select name="sexo" id="sexo" class="form-control" Value="{{ $records->sexo }}">
-                                @if( $records->sexo ==0) selected 
+                                @if( $records->sexo ==0) selected
                                 <option value="0" >Hombre</option>
                                 @else
                                 <option value="1">Mujer</option>
@@ -174,29 +167,47 @@
 @push('scripts')
     <script>
 
-        cargarCarreras($('#id_carrera').val());
+        // Carga inicial
+        cargarProfeccion("{{ $records->id_profesion }}");
+
         $(document).on('change', '#id_carrera', function() {
             // Does some stuff and logs the event to the console
             //console.log('antes de la llamada',$('#id_carrera').val());
             cargarCarreras($('#id_carrera').val())
         });
 
-        function cargarCarreras(id) {
+        function cargarProfeccion(id) {
             $.ajax({
-                url: "{{ env('APP_URL') }}/api/get/carreras?id_carrera="+id
+                url: "{{ env('APP_URL') }}/api/get/carreras/hijo?id_carrera="+id
             }).done(function(response) {
-
-                $('#id_profesion').empty();
-                $("#id_profesion option").each(function() {
-                    $(this).remove();
-                });
-
                 var profe = response;
+                $('#id_carrera option[value="'+ profe.id_carrera_pareja +'"]').prop('selected', true);
+                cargarCarreras(profe.id_carrera_pareja);
+            });
+        }
 
-                $.each(profe, function( index, element ) {
+        function cargarCarreras(carreraId) {
+
+            console.log(carreraId);
+
+            $('#id_profesion').empty();
+            $("#id_profesion option").each(function() {
+                $(this).remove();
+            });
+
+            $.ajax({
+                url: "{{ env('APP_URL') }}/api/get/carreras?id_carrera="+carreraId
+            }).done(function(carreras) {
+
+                //var profe = response;
+                console.log(carreras);
+
+                $.each(carreras, function( index, element ) {
                     // element == this
                     $('#id_profesion').append('<option value="'+element.id_carrera+'">'+element.carrera+'</option>');
                 });
+
+                $('#id_profesion option[value="'+ {{ $records->id_profesion  }} +'"]').prop('selected', true);
             });
         }
     </script>
