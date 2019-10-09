@@ -7,7 +7,7 @@
             <div class="card-body">
                 <form  method="POST" action="{{ route('clientes.store') }}" enctype="multipart/form-data">
                     @csrf
-                   
+
 
                      <div class="form-group row">
                         <label for="Nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
@@ -140,7 +140,7 @@
                     </div>
 
 
-                    
+
                     <div class="form-group row">
                         <label for="id_profesion" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
                         <div class="col-md-6">
@@ -163,7 +163,7 @@
                                     <strong>{{ $errors->first('dato_adjunto') }}</strong>
                                 </span>
                             @endif
-                        </div>  
+                        </div>
                     </div>
 
 
@@ -172,10 +172,10 @@
                         <div class="col-md-6">
                             <select id="id_idioma" type="text" class="form-control{{ $errors->has('id_idioma') ? ' is-invalid' : '' }}" name="id_idioma">
                                 @foreach ($idioma as $idioma)
-                                 
+
 
                                     <option value="{{$idioma->id_idioma}}">{{ $idioma->nombre }}</option>
-                                
+
                                 @endforeach
                             </select>
                             @if ($errors->has('id_idioma'))
@@ -191,10 +191,10 @@
                         <div class="col-md-6">
                             <select id="id_nivel" type="text" class="form-control{{ $errors->has('id_nivel') ? ' is-invalid' : '' }}" name="id_nivel">
                                 @foreach ($nivel as $nivel)
-                                 
+
 
                                     <option value="{{$nivel->id_nivel}}">{{ $nivel->nombre_nivel }}</option>
-                                
+
                                 @endforeach
                             </select>
                             @if ($errors->has('id_nivel'))
@@ -245,7 +245,7 @@
             });
         }
     </script>
-    
+
 @endpush
 
 

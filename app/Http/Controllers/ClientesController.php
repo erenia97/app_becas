@@ -55,8 +55,10 @@ class ClientesController extends Controller
     }
 
     public function update(Request $request, $id_cliente) {
-  $records = entidades::find($id_cliente);
+
+        $records = usuarios::find($id_cliente);
         $paises = pais::all();
+        $profesion = carreras::all();
 
         if ($records) {
             // $records->id_tipo = auth()->user()->id_tipo;
@@ -72,7 +74,7 @@ class ClientesController extends Controller
             $records->sexo = $request->input('sexo', $records->sexo);
             $records->save();
         }
-        return view('auth.forms.clientesUpdate', compact('records', 'paises'));
+        return view('auth.forms.clientesUpdate', compact('records', 'paises', 'profesion'));
 
     }
 
